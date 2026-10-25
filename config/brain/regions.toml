@@ -1,0 +1,85 @@
+# Synthetic functional subsystems. Names are software abstractions, not one-to-one anatomical replicas.
+
+[[region]]
+id = 0
+name = "brainstem"
+roles = ["arousal", "autonomic", "basic sensorimotor relay"]
+inputs = ["interoception", "sensory", "executive"]
+outputs = ["arousal", "autonomic", "motor"]
+
+[[region]]
+id = 1
+name = "thalamus"
+roles = ["sensory routing", "attention gating"]
+inputs = ["sensory"]
+outputs = ["cortex", "attention"]
+
+[[region]]
+id = 2
+name = "cerebellum"
+roles = ["timing", "coordination", "prediction error"]
+inputs = ["sensory", "motor"]
+outputs = ["motor", "timing"]
+
+[[region]]
+id = 3
+name = "hippocampus"
+roles = ["episodic encoding", "context", "memory retrieval"]
+inputs = ["sensory", "association", "emotion"]
+outputs = ["long_term_memory", "context"]
+
+[[region]]
+id = 4
+name = "amygdala"
+roles = ["salience", "threat learning", "affective modulation"]
+inputs = ["sensory", "memory", "interoception"]
+outputs = ["emotion", "attention", "autonomic"]
+
+[[region]]
+id = 5
+name = "basal-ganglia"
+roles = ["action selection", "reinforcement", "habit learning"]
+inputs = ["cortex", "reward"]
+outputs = ["motor", "action_selection"]
+
+[[region]]
+id = 6
+name = "frontal"
+roles = ["executive control", "planning", "inhibition", "working memory"]
+inputs = ["association", "emotion", "memory"]
+outputs = ["decision", "motor", "language"]
+
+[[region]]
+id = 7
+name = "parietal"
+roles = ["spatial integration", "attention", "multisensory association"]
+inputs = ["visual", "somatosensory", "auditory"]
+outputs = ["attention", "spatial_model"]
+
+[[region]]
+id = 8
+name = "temporal"
+roles = ["auditory processing", "object recognition", "semantic association"]
+inputs = ["auditory", "visual", "memory"]
+outputs = ["association", "language", "memory"]
+
+[[region]]
+id = 9
+name = "occipital"
+roles = ["visual feature processing"]
+inputs = ["camera"]
+outputs = ["visual_features", "spatial"]
+
+[[region]]
+id = 10
+name = "motor"
+roles = ["motor planning", "motor command"]
+inputs = ["decision", "basal_ganglia", "cerebellum"]
+outputs = ["actuators"]
+
+[[region]]
+id = 11
+name = "somatosensory"
+roles = ["touch", "proprioception", "body-state representation"]
+inputs = ["touch", "proprioception"]
+outputs = ["association", "motor", "interoception"]
