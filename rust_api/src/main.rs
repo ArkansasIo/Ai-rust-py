@@ -1,8 +1,13 @@
+mod agents;
 mod api;
 mod config;
 mod models;
 mod ollama;
+mod runtime;
+mod security;
+mod tools;
 mod workflow;
+mod workflows;
 
 use axum::{routing::{get, post}, Router};
 use sqlx::{mysql::MySqlPoolOptions, MySqlPool};
@@ -35,6 +40,10 @@ async fn main() {
         .route("/info", get(api::health::info))
         .route("/api/v1/chat", post(api::chat::chat))
         .route("/api/v1/agents/run", post(api::agents::run_agent))
+        .route("/api/v1/agents", get(api::agent_platform::list_agents))
+        .route("/api/v1/tools", get(api::agent_platform::list_tools))
+        .route("/api/v1/tools/authorize", post(api::agent_platform::authorize))
+        .route("/api/v1/policy", get(api::agent_platform::policy))
         .route("/api/v1/workflows/run", post(api::workflows::run_workflow))
         .route("/api/v1/models", get(api::models::models))
         .route("/api/v1/embeddings", post(api::rag::embed))
