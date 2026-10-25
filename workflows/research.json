@@ -1,0 +1,14 @@
+{
+  "name": "research",
+  "version": 1,
+  "nodes": [
+    {"id":"researcher","type":"agent","agent":"researcher"},
+    {"id":"critic","type":"agent","agent":"critic"},
+    {"id":"synthesizer","type":"agent","agent":"synthesizer"}
+  ],
+  "edges": [
+    {"from":"researcher","to":"critic"},
+    {"from":"critic","to":"synthesizer"}
+  ],
+  "termination":"synthesizer"
+}

@@ -1,67 +1,67 @@
-# AI Rust + Python + MySQL
+# Ai-rust-py
 
-A multi-language AI/ML platform scaffold based on the AI and Machine Learning notes supplied for this project.
+Rust + Python + MySQL AI/ML platform with Ollama, agent workflows and RAG foundations.
 
-## Stack
+## Services
 
-- **Rust** — API gateway, application orchestration, persistence integration
-- **Python** — ML training, inference, evaluation, model registry
-- **MySQL 8.4** — datasets, models, training runs, predictions, events
-- **Docker Compose** — local multi-service development
-
-## AI/ML scope
-
-- Supervised learning
-- Unsupervised learning
-- Reinforcement-learning foundation
-- Classification and clustering demos
-- Model registry
-- Training/evaluation pipeline
-- Prediction API
-- AI agent architecture foundation
-- Configuration and database schema
-
-## Architecture
-
-```text
-Client
-  |
-  v
-Rust API :8080
-  |
-  +----> MySQL :3306
-  |
-  +----> Python ML :8001
-              |
-              +--> Training
-              +--> Inference
-              +--> Evaluation
-              +--> Model Registry
-              +--> RL / Agents
-```
+| Service | Port | Responsibility |
+|---|---:|---|
+| Rust API | 8080 | Gateway, agents, workflows, persistence |
+| Python ML | 8001 | ML training/inference/evaluation/RAG helpers |
+| Ollama | 11434 | Local LLM + embeddings |
+| MySQL | 3306 | Durable application and ML state |
 
 ## Quick start
 
 ```bash
 cp .env.example .env
-docker compose up --build
+docker compose build
+docker compose up -d
 ```
 
-Rust API: `http://127.0.0.1:8080`
-Python ML: `http://127.0.0.1:8001`
+Then install a model in Ollama, for example:
 
-Health checks:
+```bash
+docker compose exec ollama ollama pull llama3.2
+```
+
+Health:
 
 ```bash
 curl http://127.0.0.1:8080/health
 curl http://127.0.0.1:8001/health
 ```
 
-Demo ML endpoints:
+Chat:
 
 ```bash
-curl -X POST http://127.0.0.1:8001/demo/supervised
-curl -X POST http://127.0.0.1:8001/demo/unsupervised
+curl -X POST http://127.0.0.1:8080/api/v1/chat \
+  -H 'content-type: application/json' \
+  -d '{"message":"Explain supervised learning in three sentences."}'
 ```
 
-This is a development foundation. Production use should add authentication, authorization, secrets management, database migrations, model artifact signing, observability, rate limiting, input validation, and secure model isolation.
+Agent:
+
+```bash
+curl -X POST http://127.0.0.1:8080/api/v1/agents/run \
+  -H 'content-type: application/json' \
+  -d '{"agent":"researcher","task":"Compare Rust and Python for AI orchestration."}'
+```
+
+## Architecture
+
+```text
+Client
+  -> Rust Axum Gateway
+     -> Agent Runtime / Workflow Engine
+     -> Ollama
+     -> Python ML
+     -> MySQL / Memory
+     -> RAG / Embeddings
+```
+
+The design intentionally keeps model inference separate from orchestration so additional local or hosted model providers can be added later.
+
+## Production roadmap
+
+Authentication and authorization, secret management, isolated tool sandboxes, vector database, streaming chat, durable task queues, observability, model evaluation, GitHub coding agents and human approval gates are the next production layers.

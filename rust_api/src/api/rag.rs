@@ -1,0 +1,3 @@
+use axum::{extract::State,Json}; use serde::Deserialize; use serde_json::{json,Value}; use std::sync::Arc; use crate::AppState;
+#[derive(Deserialize)] pub struct EmbedRequest { pub input:String, pub model:Option<String> }
+pub async fn embed(State(s):State<Arc<AppState>>,Json(r):Json<EmbedRequest>)->Json<Value>{ let model=r.model.unwrap_or_else(||"nomic-embed-text".into()); let u=format!("{}/api/embed",s.config.ollama_url.trim_end_matches('/')); match s.http.post(u).json(&json!({"model":model,"input":r.input})).send().await { Ok(resp)=>Json(resp.json().await.unwrap_or_else(|_|json!({"embeddings":[]}))), Err(e)=>Json(json!({"error":e.to_string()})) } }

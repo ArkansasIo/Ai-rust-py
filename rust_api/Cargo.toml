@@ -1,6 +1,6 @@
 [package]
 name = "ai_ml_rust_api"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2021"
 
 [dependencies]
@@ -8,8 +8,13 @@ axum = "0.8"
 tokio = { version = "1", features = ["full"] }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
-reqwest = { version = "0.12", features = ["json", "rustls-tls"] }
-sqlx = { version = "0.8", features = ["runtime-tokio-rustls", "mysql", "json"] }
+reqwest = { version = "0.12", features = ["json", "rustls-tls", "stream"] }
+sqlx = { version = "0.8", features = ["runtime-tokio-rustls", "mysql", "json", "uuid", "chrono"] }
 dotenvy = "0.15"
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+tower = "0.5"
+tower-http = { version = "0.6", features = ["trace", "cors", "timeout", "request-id", "compression-full"] }
+uuid = { version = "1", features = ["v4", "serde"] }
+chrono = { version = "0.4", features = ["serde"] }
+thiserror = "2"

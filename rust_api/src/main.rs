@@ -1,97 +1,52 @@
-use axum::{extract::State, http::StatusCode, response::IntoResponse, routing::{get, post}, Json, Router};
-use reqwest::Client;
-use serde::{Deserialize, Serialize};
-use serde_json::{json, Value};
-use std::{env, sync::Arc};
-use sqlx::{MySqlPool, mysql::MySqlPoolOptions};
+mod api;
+mod config;
+mod models;
+mod ollama;
+mod workflow;
+
+use axum::{routing::{get, post}, Router};
+use sqlx::{mysql::MySqlPoolOptions, MySqlPool};
+use std::{env, sync::Arc, time::Duration};
+use tower::ServiceBuilder;
+use tower_http::{compression::CompressionLayer, cors::CorsLayer, timeout::TimeoutLayer, trace::TraceLayer};
+use tracing::info;
 
 #[derive(Clone)]
-struct AppState {
-    client: Client,
-    ml_url: String,
-    db: MySqlPool,
-}
-
-#[derive(Serialize)]
-struct Health {
-    service: &'static str,
-    status: &'static str,
-}
-
-#[derive(Deserialize, Serialize)]
-struct PredictRequest {
-    model: String,
-    input: Value,
-}
-
-async fn health() -> impl IntoResponse {
-    Json(Health { service: "rust-api", status: "ok" })
-}
-
-async fn predict(
-    State(state): State<Arc<AppState>>,
-    Json(req): Json<PredictRequest>,
-) -> Result<Json<Value>, (StatusCode, String)> {
-    let url = format!("{}/predict", state.ml_url.trim_end_matches('/'));
-    let response = state.client.post(url).json(&req).send().await
-        .map_err(|e| (StatusCode::BAD_GATEWAY, e.to_string()))?;
-
-    let status = response.status();
-    let body: Value = response.json().await
-        .map_err(|e| (StatusCode::BAD_GATEWAY, e.to_string()))?;
-
-    if !status.is_success() {
-        return Err((StatusCode::BAD_GATEWAY, body.to_string()));
-    }
-
-    sqlx::query("INSERT INTO ai_events (event_type, payload_json) VALUES (?, ?)")
-        .bind("prediction")
-        .bind(sqlx::types::Json(&body))
-        .execute(&state.db)
-        .await
-        .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
-
-    Ok(Json(body))
-}
-
-async fn info() -> impl IntoResponse {
-    Json(json!({
-        "name": "ai-rust-py",
-        "version": "0.1.0",
-        "components": ["rust-api", "python-ml", "mysql"]
-    }))
+pub struct AppState {
+    pub db: MySqlPool,
+    pub http: reqwest::Client,
+    pub config: config::Config,
 }
 
 #[tokio::main]
 async fn main() {
     dotenvy::dotenv().ok();
-    tracing_subscriber::fmt::init();
+    tracing_subscriber::fmt().with_env_filter(env::var("RUST_LOG").unwrap_or_else(|_| "info".into())).init();
 
-    let database_url = env::var("DATABASE_URL")
-        .unwrap_or_else(|_| "mysql://ai_user:ai_password@127.0.0.1:3306/ai_ml".into());
-    let ml_url = env::var("PYTHON_ML_URL")
-        .unwrap_or_else(|_| "http://127.0.0.1:8001".into());
-    let host = env::var("RUST_HOST").unwrap_or_else(|_| "127.0.0.1".into());
-    let port = env::var("RUST_PORT").unwrap_or_else(|_| "8080".into());
+    let config = config::Config::from_env();
+    let db = MySqlPoolOptions::new().max_connections(config.db_max_connections)
+        .connect(&config.database_url).await.expect("database connection failed");
+    sqlx::migrate!("../database/migrations").run(&db).await.expect("database migration failed");
 
-    let db = MySqlPoolOptions::new()
-        .max_connections(10)
-        .connect(&database_url)
-        .await
-        .expect("database connection failed");
-
-    let state = Arc::new(AppState { client: Client::new(), ml_url, db });
-
+    let state = Arc::new(AppState { db, http: reqwest::Client::new(), config: config.clone() });
     let app = Router::new()
-        .route("/health", get(health))
-        .route("/info", get(info))
-        .route("/predict", post(predict))
-        .with_state(state);
+        .route("/", get(api::health::root))
+        .route("/health", get(api::health::health))
+        .route("/info", get(api::health::info))
+        .route("/api/v1/chat", post(api::chat::chat))
+        .route("/api/v1/agents/run", post(api::agents::run_agent))
+        .route("/api/v1/workflows/run", post(api::workflows::run_workflow))
+        .route("/api/v1/models", get(api::models::models))
+        .route("/api/v1/embeddings", post(api::rag::embed))
+        .route("/api/v1/memory/search", post(api::memory::search))
+        .with_state(state)
+        .layer(ServiceBuilder::new()
+            .layer(TraceLayer::new_for_http())
+            .layer(CompressionLayer::new())
+            .layer(CorsLayer::permissive())
+            .layer(TimeoutLayer::new(Duration::from_secs(120))));
 
-    let listener = tokio::net::TcpListener::bind(format!("{host}:{port}"))
-        .await
-        .expect("bind failed");
-
-    println!("Rust AI API listening on http://{host}:{port}");
+    let listener = tokio::net::TcpListener::bind((&config.host[..], config.port)).await.expect("bind failed");
+    info!(address = %listener.local_addr().unwrap(), "AI Rust gateway started");
     axum::serve(listener, app).await.expect("server failed");
 }

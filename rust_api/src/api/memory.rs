@@ -1,0 +1,3 @@
+use axum::{extract::State,Json}; use serde::Deserialize; use serde_json::{json,Value}; use std::sync::Arc; use crate::AppState;
+#[derive(Deserialize)] pub struct SearchRequest { pub query:String, pub limit:Option<u32> }
+pub async fn search(State(s):State<Arc<AppState>>,Json(r):Json<SearchRequest>)->Json<Value>{ let n=r.limit.unwrap_or(5); let rows=sqlx::query_as::<_,(String,String)>("SELECT memory_key,memory_value FROM memories WHERE memory_value LIKE ? ORDER BY created_at DESC LIMIT ?").bind(format!("%{}%",r.query)).bind(n).fetch_all(&s.db).await.unwrap_or_default(); Json(json!({"query":r.query,"results":rows.into_iter().map(|(k,v)|json!({"key":k,"value":v})).collect::<Vec<_>>() })) }
