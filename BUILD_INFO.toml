@@ -1,0 +1,27 @@
+[build]
+name = "Synthetic Brain"
+dev_name = "ArkansasIo"
+version = "1.0.5"
+release = "Prototype Alpha 1.0.5"
+channel = "prototype-alpha"
+status = "development"
+
+[identity]
+project = "ai-rust-py"
+architecture = "Rust + Python"
+targets = ["windows-virtual", "raspberry-pi3", "custom-cartridge"]
+
+[virtual_hardware]
+profile = "full-brain-virtual"
+regional_cartridges = 12
+
+[compatibility]
+windows = true
+raspberry_pi3 = true
+custom_hardware = true
+
+[build_metadata]
+format = "semantic-version"
+major = 1
+minor = 0
+patch = 5
