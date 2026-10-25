@@ -1,0 +1,33 @@
+connector,pin_group,signal,domain,direction,notes
+J1,POWER,VBUS_48V,power,in,Protected 48 VDC input
+J1,POWER,PGND,power,bidir,Power return
+J1,MGMT,I2C_SDA,management,bidir,Management bus
+J1,MGMT,I2C_SCL,management,in,Management clock
+J1,MGMT,SPI_MOSI,management,in,Local peripheral bus
+J1,MGMT,SPI_MISO,management,out,Local peripheral bus
+J1,MGMT,SPI_SCK,management,in,Local peripheral clock
+J1,MGMT,SPI_CS0,management,in,Local peripheral select
+J1,MGMT,UART_TX,debug,out,Diagnostic UART
+J1,MGMT,UART_RX,debug,in,Diagnostic UART
+J1,MGMT,MOD_RESET_N,control,in,Regional reset
+J1,MGMT,MOD_ENABLE,control,in,Regional power enable
+J1,MGMT,MOD_PGOOD,control,out,Power-good status
+J1,MGMT,WDOG_STATUS,control,out,Watchdog health
+J1,NEURO,NEURO_TX0_P,high_speed,out,Differential neural lane 0
+J1,NEURO,NEURO_TX0_N,high_speed,out,Differential neural lane 0
+J1,NEURO,NEURO_RX0_P,high_speed,in,Differential neural lane 0
+J1,NEURO,NEURO_RX0_N,high_speed,in,Differential neural lane 0
+J1,NEURO,NEURO_TX1_P,high_speed,out,Differential neural lane 1
+J1,NEURO,NEURO_TX1_N,high_speed,out,Differential neural lane 1
+J1,NEURO,NEURO_RX1_P,high_speed,in,Differential neural lane 1
+J1,NEURO,NEURO_RX1_N,high_speed,in,Differential neural lane 1
+J1,NEURO,NEURO_REFCLK_P,clock,in,Low-skew reference clock
+J1,NEURO,NEURO_REFCLK_N,clock,in,Low-skew reference clock
+J1,THERMAL,FAN_PWM,control,out,PWM blower command
+J1,THERMAL,FAN_TACH,control,in,Blower tachometer
+J1,THERMAL,TEMP_ALERT_N,control,out,Over-temperature alert
+J1,GPIO,GPIO0,gpio,bidir,Low-speed expansion
+J1,GPIO,GPIO1,gpio,bidir,Low-speed expansion
+J1,GPIO,GPIO2,gpio,bidir,Low-speed expansion
+J1,GPIO,GPIO3,gpio,bidir,Low-speed expansion
+J1,SHIELD,CHASSIS,shield,bidir,Chassis/shield reference
