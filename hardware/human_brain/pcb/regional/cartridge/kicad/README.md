@@ -15,9 +15,9 @@ This directory is the source-of-truth entry point for the standardized regional 
 - Input power: 48 VDC to protected intermediate rail, then local regulated rails
 - Thermal: copper heat spreader + fin stack + PWM blower interface
 
-The Orin NX 16GB is used for the first physical prototype because its 70 x 45 mm module envelope fits inside the 120 x 80 mm cartridge carrier. NVIDIA currently lists Orin NX 16GB at up to 157 TOPS and 10–25 W module power. citeturn0search0turn0search5
+The Orin NX 16GB is used for the first physical prototype because its 70 x 45 mm module envelope fits inside the 120 x 80 mm cartridge carrier. Current NVIDIA documentation lists the Orin NX family at up to 157 TOPS and 10–25 W module power.
 
-The high-speed connector family is frozen at the **Samtec SEARAY family** level for Rev A. Exact mating part numbers and stack height remain a BOM-level selection after the mechanical stack-up is finalized. SEARAY supports dense differential routing and high-speed protocols, with current family documentation covering 0.80/1.27 mm pitch options. citeturn0search24turn0search26
+The high-speed connector family is frozen at the **Samtec SEARAY family** level for Rev A. Exact mating part numbers and stack height remain a BOM-level selection after the mechanical stack-up is finalized. The family provides high-density differential routing and high-speed board-to-board/backplane options.
 
 ## Important design boundary
 
