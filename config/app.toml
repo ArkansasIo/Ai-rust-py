@@ -1,0 +1,16 @@
+[app]
+name = "ai-ml-system"
+environment = "development"
+
+[rust_api]
+host = "127.0.0.1"
+port = 8080
+
+[python_ml]
+url = "http://127.0.0.1:8001"
+
+[database]
+url = "mysql://ai_user:ai_password@127.0.0.1:3306/ai_ml"
+
+[models]
+directory = "./models"

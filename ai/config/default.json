@@ -1,0 +1,16 @@
+{
+  "name": "AI ML System",
+  "version": "0.1.0",
+  "tasks": ["classification", "regression", "clustering", "reinforcement"],
+  "services": {
+    "rust_api": "http://127.0.0.1:8080",
+    "python_ml": "http://127.0.0.1:8001"
+  },
+  "database": {
+    "engine": "mysql",
+    "database": "ai_ml"
+  },
+  "models": {
+    "directory": "./models"
+  }
+}

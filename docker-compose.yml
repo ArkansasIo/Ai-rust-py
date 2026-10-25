@@ -1,0 +1,41 @@
+services:
+  mysql:
+    image: mysql:8.4
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-change_me}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-ai_ml}
+      MYSQL_USER: ${MYSQL_USER:-ai_user}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-ai_password}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/001_schema.sql:ro
+
+  python-ml:
+    build:
+      context: ./python_ml
+    environment:
+      MODEL_DIR: /app/models
+    ports:
+      - "8001:8001"
+    volumes:
+      - ./models:/app/models
+
+  rust-api:
+    build:
+      context: ./rust_api
+    environment:
+      PYTHON_ML_URL: http://python-ml:8001
+      DATABASE_URL: mysql://ai_user:ai_password@mysql:3306/ai_ml
+      RUST_HOST: 0.0.0.0
+      RUST_PORT: 8080
+    depends_on:
+      - mysql
+      - python-ml
+    ports:
+      - "8080:8080"
+
+volumes:
+  mysql_data:
