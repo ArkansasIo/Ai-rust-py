@@ -1,0 +1,29 @@
+[build]
+dev_name = "ArkansasIo"
+version = "1.0.5"
+release = "Prototype Alpha 1.0.5"
+build_id = "SBA-PA1-0105"
+
+[target]
+name = "raspberry-pi3"
+os = "linux"
+arch = "armv7"
+mode = "hybrid-virtual"
+
+[hardware]
+regional_cartridges = 12
+physical_cpu_cores = 4
+virtual_memory_mb = 768
+virtual_storage_gb = 32
+neuro_link_lanes = 12
+input_voltage_v = 48.0
+
+[simulation]
+deterministic = true
+accelerator_emulation = true
+sensor_simulation = true
+actuator_simulation = true
+thermal_simulation = true
+power_simulation = true
+watchdog = true
+fault_injection = true
