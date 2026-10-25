@@ -1,0 +1,16 @@
+[package]
+name = "human-brain-runtime"
+version = "1.0.5"
+edition = "2021"
+description = "Synthetic Brain Architecture Prototype Alpha runtime"
+authors = ["ArkansasIo"]
+
+[[bin]]
+name = "human-brain"
+path = "src/main.rs"
+
+[features]
+default = ["virtual"]
+virtual = []
+raspberry-pi3 = []
+custom-cartridge = []
