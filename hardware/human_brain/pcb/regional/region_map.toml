@@ -1,0 +1,83 @@
+[[region]]
+id = 0
+name = "brainstem"
+compute_profile = "deterministic-control"
+ram_gb = 16
+nvme_tb = 1
+
+[[region]]
+id = 1
+name = "thalamus"
+compute_profile = "routing-and-sensory-fusion"
+ram_gb = 32
+nvme_tb = 1
+
+[[region]]
+id = 2
+name = "cerebellum"
+compute_profile = "real-time-motor-learning"
+ram_gb = 32
+nvme_tb = 1
+
+[[region]]
+id = 3
+name = "hippocampus"
+compute_profile = "memory-heavy"
+ram_gb = 64
+nvme_tb = 4
+
+[[region]]
+id = 4
+name = "amygdala"
+compute_profile = "low-latency-affect"
+ram_gb = 16
+nvme_tb = 1
+
+[[region]]
+id = 5
+name = "basal_ganglia"
+compute_profile = "decision-and-reward"
+ram_gb = 32
+nvme_tb = 2
+
+[[region]]
+id = 6
+name = "frontal"
+compute_profile = "executive-high-performance"
+ram_gb = 64
+nvme_tb = 4
+
+[[region]]
+id = 7
+name = "parietal"
+compute_profile = "spatial-sensor-fusion"
+ram_gb = 32
+nvme_tb = 2
+
+[[region]]
+id = 8
+name = "temporal"
+compute_profile = "language-audio-association"
+ram_gb = 64
+nvme_tb = 4
+
+[[region]]
+id = 9
+name = "occipital"
+compute_profile = "vision-gpu-npu"
+ram_gb = 64
+nvme_tb = 2
+
+[[region]]
+id = 10
+name = "motor"
+compute_profile = "deterministic-actuation"
+ram_gb = 32
+nvme_tb = 1
+
+[[region]]
+id = 11
+name = "somatosensory"
+compute_profile = "tactile-and-proprioceptive-fusion"
+ram_gb = 32
+nvme_tb = 2
