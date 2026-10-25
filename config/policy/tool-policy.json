@@ -1,0 +1,11 @@
+{
+  "default_action": "deny",
+  "rules": [
+    {"risk":"read_only","approval_required":false,"network":false,"filesystem":false},
+    {"risk":"low","approval_required":false,"network":true,"filesystem":false},
+    {"risk":"medium","approval_required":true,"network":true,"filesystem":false},
+    {"risk":"high","approval_required":true,"network":false,"filesystem":true},
+    {"risk":"critical","approval_required":true,"network":false,"filesystem":false}
+  ],
+  "protected_actions":["git push","delete","database drop","credential access","production deployment"]
+}
