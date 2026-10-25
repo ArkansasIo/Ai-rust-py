@@ -1,0 +1,25 @@
+[build]
+project = "Synthetic Brain Architecture"
+dev_name = "ArkansasIo"
+version = "1.0.5"
+release = "Prototype Alpha 1.0.5"
+build_id = "SBA-PA1-0105"
+status = "prototype-alpha"
+
+[target.windows]
+architecture = "x86_64"
+mode = "virtual"
+
+[target.raspberry_pi3]
+architecture = "armv7"
+mode = "hybrid-virtual"
+
+[target.custom_cartridge]
+status = "planned"
+mode = "hardware"
+
+[architecture]
+regions = 12
+neuro_link = true
+virtual_hardware = true
+hardware_abstraction_layer = true
