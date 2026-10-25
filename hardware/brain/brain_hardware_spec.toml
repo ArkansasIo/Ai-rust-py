@@ -1,0 +1,32 @@
+[system]
+name = "Synthetic Brain Computer"
+architecture = "layered-distributed"
+protocol = "Neuro-Link Protocol"
+reference_platform = "Raspberry-Pi-class development computer"
+
+[clock]
+control_hz = 1000
+neural_tick_hz = 100
+
+[memory]
+shared_memory_mb = 1024
+local_tile_memory_mb = 64
+
+[backplane]
+control_bus = "i2c"
+local_signal_bus = "spi"
+debug_bus = "uart"
+host_transport = "ethernet-or-usb"
+
+[regions]
+controllers = 12
+
+[safety]
+watchdog_ms = 250
+thermal_shutdown_c = 85.0
+require_power_good = true
+
+[development]
+firmware_target = "linux-user-space-or-arm64-mcu"
+fpga_target = "future"
+neuromorphic_target = "future"
