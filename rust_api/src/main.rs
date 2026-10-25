@@ -1,6 +1,7 @@
 mod agents;
 mod api;
 mod config;
+mod domain;
 mod models;
 mod ollama;
 mod runtime;
