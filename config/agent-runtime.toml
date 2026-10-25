@@ -1,0 +1,14 @@
+# Agent Runtime Configuration
+
+[agents]
+default = "general"
+max_steps = 32
+
+[security]
+allow_shell = false
+allow_network = false
+require_approval_for_writes = true
+
+[ollama]
+url = "http://ollama:11434"
+model = "llama3.2"
