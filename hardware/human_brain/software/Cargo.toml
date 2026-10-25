@@ -5,6 +5,9 @@ edition = "2021"
 description = "Hardware abstraction and deterministic virtual hardware for Synthetic Brain Architecture"
 authors = ["ArkansasIo"]
 
+[lib]
+path = "lib.rs"
+
 [features]
 default = ["virtual"]
 virtual = []
