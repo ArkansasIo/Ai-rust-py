@@ -1,0 +1,51 @@
+[board]
+name = "human-brain-standard-regional-cartridge"
+revision = "A0"
+status = "prototype-architecture"
+width_mm = 120.0
+height_mm = 80.0
+thickness_mm = 25.0
+layers = 10
+
+[compute]
+architecture = "arm64"
+processor = "selected-after-platform-evaluation"
+gpu = "regional-accelerator"
+npu = "regional-accelerator"
+ram_gb = 32
+
+[storage]
+boot = "microSD-or-eMMC"
+local = "NVMe"
+local_tb = 2
+
+[management]
+controller = "independent-mcu"
+watchdog_ms = 250
+secure_boot = true
+thermal_shutdown_c = 85.0
+
+[interfaces]
+backplane_power = "48V_DC"
+management = "I2C"
+local_peripheral = "SPI"
+diagnostics = "UART"
+service = "USB-C"
+gpio = true
+neuro_link = "high-speed-differential"
+
+[thermal]
+heat_spreader = "copper-or-vapor-chamber"
+heatsink = "custom-aluminum-fin-stack"
+blower_interface = "40-60mm-PWM-centrifugal"
+board_sensors = 4
+
+[connector_contract]
+power = "standardized-regional-power"
+control = "standardized-management"
+neural = "standardized-high-speed-differential"
+service = "standardized-USB-C"
+mechanical = "120x80x25mm-cartridge"
+
+[regional_override]
+profile = "from-region-map"
