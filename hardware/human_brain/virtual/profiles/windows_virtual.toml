@@ -1,0 +1,28 @@
+[build]
+dev_name = "ArkansasIo"
+version = "1.0.5"
+release = "Prototype Alpha 1.0.5"
+
+[host]
+os = "windows"
+architecture = "x86_64"
+mode = "virtual"
+
+[brain]
+regional_cartridges = 12
+master_controller = true
+neuro_link_backplane = true
+
+[resources]
+virtual_cpu_cores = 12
+virtual_memory_gb = 16
+virtual_storage_gb = 128
+
+[simulation]
+deterministic = true
+sensor_simulation = true
+actuator_simulation = true
+thermal_simulation = true
+power_simulation = true
+watchdog_simulation = true
+fault_injection = true
