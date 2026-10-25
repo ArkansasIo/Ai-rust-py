@@ -1,0 +1,28 @@
+[build]
+dev_name = "ArkansasIo"
+version = "1.0.5"
+release = "Prototype Alpha 1.0.5"
+build_id = "SBA-PA1-0105"
+
+[target]
+name = "windows-virtual"
+os = "windows"
+arch = "x86_64"
+mode = "virtual"
+
+[hardware]
+regional_cartridges = 12
+virtual_cpu_cores = 12
+virtual_memory_gb = 16
+virtual_storage_gb = 128
+neuro_link_lanes = 12
+input_voltage_v = 48.0
+
+[simulation]
+deterministic = true
+sensor_simulation = true
+actuator_simulation = true
+thermal_simulation = true
+power_simulation = true
+watchdog = true
+fault_injection = true
