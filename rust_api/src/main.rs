@@ -6,6 +6,7 @@ mod models;
 mod ollama;
 mod runtime;
 mod security;
+mod services;
 mod task_queue;
 mod tools;
 mod workflow;
