@@ -11,6 +11,9 @@ path = "src/main.rs"
 
 [features]
 default = ["virtual"]
-virtual = []
-raspberry-pi3 = []
-custom-cartridge = []
+virtual = ["synthetic-brain-hal/virtual"]
+raspberry-pi3 = ["synthetic-brain-hal/raspberry-pi3"]
+custom-cartridge = ["synthetic-brain-hal/custom-cartridge"]
+
+[dependencies]
+synthetic-brain-hal = { path = "../../hardware/human_brain/software", default-features = false }
