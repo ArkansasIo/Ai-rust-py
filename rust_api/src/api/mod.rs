@@ -1,4 +1,5 @@
 pub mod agents;
+pub mod agent_platform;
 pub mod chat;
 pub mod health;
 pub mod memory;
