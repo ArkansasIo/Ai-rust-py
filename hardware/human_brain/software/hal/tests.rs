@@ -45,16 +45,16 @@ fn management_buses_record_activity() {
     assert!(gpio.pins[3]);
 
     let mut i2c = VirtualI2c::default();
-    i2c.transfer(0x42, &[1, 2, 3]);
+    i2c.transfer();
     assert_eq!(i2c.transactions, 1);
 
     let mut spi = VirtualSpi::default();
-    spi.transfer(&[0xAA, 0x55]);
+    spi.transfer();
     assert_eq!(spi.transactions, 1);
 
     let mut uart = VirtualUart::default();
-    uart.transmit(&[1, 2]);
-    uart.receive(&[3, 4, 5]);
+    uart.transmit(2);
+    uart.receive(3);
     assert_eq!(uart.tx_bytes, 2);
     assert_eq!(uart.rx_bytes, 3);
 }
