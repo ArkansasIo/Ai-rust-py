@@ -1,0 +1,22 @@
+name: Synthetic Brain Architecture CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  rust:
+    name: Rust validation
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: runtime/prototype-alpha-1.0.5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Check runtime
+        run: cargo check --features virtual
+      - name: Run tests
+        run: cargo test --features virtual
+      - name: Build runtime
+        run: cargo build --release --features virtual
