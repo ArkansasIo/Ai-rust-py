@@ -1,11 +1,10 @@
 use std::env;
-use synthetic_brain_hal::{BrainMessage, CognitiveState, FaultInjection, FaultKind, HealthTelemetry, MessageBus, NeuroLinkFrame, Scheduler, VirtualCpu, VirtualGpu, VirtualMemory, VirtualNeuroLink, VirtualPower, VirtualStorage, VirtualThermal, VirtualWatchdog};
+use synthetic_brain_hal::{BrainMessage, CognitiveState, FaultInjection, FaultKind, HealthTelemetry, MessageBus, NeuroLinkFrame, RegionalManager, Scheduler, VirtualCpu, VirtualGpu, VirtualMemory, VirtualNeuroLink, VirtualPower, VirtualStorage, VirtualThermal, VirtualWatchdog};
 
 const VERSION: &str = "1.0.5";
 const RELEASE: &str = "Prototype Alpha 1.0.5";
 const DEV_NAME: &str = "ArkansasIo";
 const BUILD_ID: &str = "SBA-PA1-0105";
-const REGION_COUNT: usize = 12;
 
 #[derive(Debug, Clone, Copy)]
 struct RuntimeOptions { ticks: u64, headless: bool }
@@ -16,37 +15,15 @@ fn parse_options() -> RuntimeOptions {
     let mut index = 1;
     while index < args.len() {
         match args[index].as_str() {
-            "--version" | "-V" => {
-                println!("Synthetic Brain Architecture {VERSION} ({BUILD_ID})");
-                std::process::exit(0);
-            }
+            "--version" | "-V" => { println!("Synthetic Brain Architecture {VERSION} ({BUILD_ID})"); std::process::exit(0); }
             "--headless" => options.headless = true,
-            "--ticks" => {
-                if let Some(value) = args.get(index + 1) { options.ticks = value.parse().unwrap_or(options.ticks); index += 1; }
-            }
-            "--help" | "-h" => {
-                println!("Usage: human-brain [--ticks N] [--headless] [--version]");
-                std::process::exit(0);
-            }
+            "--ticks" => { if let Some(value) = args.get(index + 1) { options.ticks = value.parse().unwrap_or(options.ticks); index += 1; } }
+            "--help" | "-h" => { println!("Usage: human-brain [--ticks N] [--headless] [--version]"); std::process::exit(0); }
             _ => {}
         }
         index += 1;
     }
     options
-}
-
-#[derive(Debug, Clone, Copy)]
-struct Region { id: usize, name: &'static str, enabled: bool }
-
-fn regions() -> [Region; REGION_COUNT] {
-    [
-        Region { id: 0, name: "brainstem", enabled: true }, Region { id: 1, name: "thalamus", enabled: true },
-        Region { id: 2, name: "cerebellum", enabled: true }, Region { id: 3, name: "hippocampus", enabled: true },
-        Region { id: 4, name: "amygdala", enabled: true }, Region { id: 5, name: "basal-ganglia", enabled: true },
-        Region { id: 6, name: "frontal", enabled: true }, Region { id: 7, name: "parietal", enabled: true },
-        Region { id: 8, name: "temporal", enabled: true }, Region { id: 9, name: "occipital", enabled: true },
-        Region { id: 10, name: "motor", enabled: true }, Region { id: 11, name: "somatosensory", enabled: true },
-    ]
 }
 
 fn main() {
@@ -59,10 +36,11 @@ fn main() {
     println!("Target    : virtual hardware");
     println!("Control   : ticks={} headless={}", options.ticks, options.headless);
 
-    let regions = regions();
+    let mut regional_manager = RegionalManager::default();
+    regional_manager.start_all();
     if !options.headless {
-        println!("Initializing {} regional cartridges...", regions.len());
-        for region in regions { println!("  [{}] {} -> {}", region.id, region.name, if region.enabled { "READY" } else { "DISABLED" }); }
+        println!("Regional cartridges: {}/12 READY", regional_manager.ready_count());
+        for cartridge in &regional_manager.cartridges { println!("  [{}] {} -> {:?}", cartridge.id, cartridge.name, cartridge.status); }
     }
 
     let mut cpu = VirtualCpu::new(12);
@@ -98,11 +76,12 @@ fn main() {
         let telemetry = HealthTelemetry::evaluate(tick.index, thermal.temperature_c, power.input_v, watchdog.expired(tick.index), thermal.emergency());
         let frame = NeuroLinkFrame::new(0, 6, 1, 1, tick.index as u32, tick.index, vec![1, 2, 3]);
         let _encoded_frame = frame.encode();
-        if !options.headless { println!("tick={} dt={:.3}s temp={:.1}C health={:?} queue={}", tick.index, tick.dt_seconds, telemetry.temperature_c, telemetry.state, bus.len()); }
+        if !options.headless { println!("tick={} dt={:.3}s temp={:.1}C health={:?} regions={}/12", tick.index, tick.dt_seconds, telemetry.temperature_c, telemetry.state, regional_manager.ready_count()); }
     }
 
     println!("Watchdog expired: {}", watchdog.expired(scheduler.index));
     println!("Thermal emergency: {}", thermal.emergency());
     println!("Neuro-Link TX frames: {}", neuro_link.frames_tx);
+    println!("Regional cartridges ready: {}/12", regional_manager.ready_count());
     println!("Prototype Alpha runtime test complete.");
 }
