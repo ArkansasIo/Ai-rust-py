@@ -1,0 +1,28 @@
+[board]
+name = "human-brain-vision"
+revision = "A0"
+width_mm = 60.0
+height_mm = 40.0
+layers = 6
+
+[cameras]
+count = 2
+mode = "stereo"
+color = "rgb"
+infrared = true
+depth = true
+hardware_sync = true
+
+[interfaces]
+upstream = "high-speed-differential"
+local_control = "i2c"
+service = "usb-c"
+
+[processing]
+preprocess = true
+output = "occipital-neuro-link"
+
+[mechanical]
+window = "optical-grade-transparent"
+thermal_zone = "low-temperature-sensor-zone"
+replaceable = true
