@@ -1,0 +1,38 @@
+[board]
+name = "human-brain-master"
+revision = "A0"
+status = "prototype-architecture"
+width_mm = 120.0
+height_mm = 80.0
+layers = 10
+
+[compute]
+architecture = "arm64"
+processor = "selected-after-platform-evaluation"
+gpu = "integrated-or-attached"
+npu = "integrated-or-attached"
+ram_gb = 64
+
+[storage]
+boot = "microSD-or-eMMC"
+primary = "NVMe"
+primary_tb = 2
+
+[service]
+usb_c = true
+uart = true
+jtag = true
+
+[network]
+management = "ethernet"
+neural_link = "high-speed-differential"
+
+[management]
+controller = "independent-mcu"
+watchdog_ms = 250
+thermal_shutdown_c = 85.0
+
+[thermal]
+interface = "copper-vapor-chamber-or-heat-spreader"
+heatsink = "custom-aluminum-fin-stack"
+blower = "40-60mm-pwm-centrifugal"
