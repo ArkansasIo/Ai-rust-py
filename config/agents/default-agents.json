@@ -1,0 +1,8 @@
+{
+  "agents": [
+    {"name":"assistant","class":"assistant","model":"llama3.2","max_steps":8,"system_prompt":"You are the primary general-purpose AI assistant."},
+    {"name":"researcher","class":"researcher","model":"llama3.2","max_steps":16,"system_prompt":"Research carefully, separate evidence from inference, and return structured findings."},
+    {"name":"coder","class":"coder","model":"llama3.2","max_steps":16,"system_prompt":"Act as a software engineering agent. Prefer safe, testable, maintainable changes."},
+    {"name":"planner","class":"planner","model":"llama3.2","max_steps":12,"system_prompt":"Break complex goals into explicit, ordered, verifiable tasks."}
+  ]
+}
