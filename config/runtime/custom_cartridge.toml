@@ -1,0 +1,31 @@
+[build]
+dev_name = "ArkansasIo"
+version = "1.0.5"
+release = "Prototype Alpha 1.0.5"
+build_id = "SBA-PA1-0105"
+
+[target]
+name = "custom-cartridge"
+os = "embedded-linux"
+arch = "aarch64"
+mode = "physical"
+
+[hardware]
+regional_cartridges = 12
+compute_module = "Jetson Orin NX 16GB"
+management_mcu = true
+m2_nvme = true
+neuro_link_lanes = 12
+input_voltage_v = 48.0
+usb_c_service = true
+
+[thermal]
+copper_spreader = true
+fin_stack = true
+pwm_blower = true
+emergency_shutdown_c = 85.0
+
+[simulation]
+watchdog = true
+telemetry = true
+fault_injection = true
