@@ -38,6 +38,7 @@ pub struct WorkflowDefinition {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct WorkflowNode {
     pub id: String,
+    #[serde(rename = "type")]
     pub node_type: String,
     pub agent: Option<String>,
     pub prompt: Option<String>,
