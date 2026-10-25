@@ -1,0 +1,124 @@
+[metadata]
+name = "human-brain-regional-cartridge-net-contract"
+revision = "A0"
+status = "architecture"
+
+[[net]]
+name = "PWR_48V"
+class = "power"
+source = "backplane"
+destination = "regional-power-entry"
+
+[[net]]
+name = "PWR_RETURN"
+class = "power"
+source = "regional-power-entry"
+destination = "backplane"
+
+[[net]]
+name = "POWER_GOOD"
+class = "management"
+source = "power-management"
+destination = "management-mcu"
+
+[[net]]
+name = "SLOT_ENABLE"
+class = "management"
+source = "management-mcu"
+destination = "power-management"
+
+[[net]]
+name = "I2C_SCL"
+class = "management"
+source = "backplane"
+destination = "management-mcu"
+
+[[net]]
+name = "I2C_SDA"
+class = "management"
+source = "backplane"
+destination = "management-mcu"
+
+[[net]]
+name = "SPI_SCK"
+class = "local-peripheral"
+source = "regional-compute"
+destination = "local-peripherals"
+
+[[net]]
+name = "SPI_MOSI"
+class = "local-peripheral"
+source = "regional-compute"
+destination = "local-peripherals"
+
+[[net]]
+name = "SPI_MISO"
+class = "local-peripheral"
+source = "local-peripherals"
+destination = "regional-compute"
+
+[[net]]
+name = "UART_TX"
+class = "debug"
+source = "management-mcu"
+destination = "service-uart"
+
+[[net]]
+name = "UART_RX"
+class = "debug"
+source = "service-uart"
+destination = "management-mcu"
+
+[[net]]
+name = "NEUROLINK_A_P"
+class = "high-speed-differential"
+source = "regional-transceiver"
+destination = "backplane"
+
+[[net]]
+name = "NEUROLINK_A_N"
+class = "high-speed-differential"
+source = "regional-transceiver"
+destination = "backplane"
+
+[[net]]
+name = "NEUROLINK_B_P"
+class = "high-speed-differential"
+source = "regional-transceiver"
+destination = "backplane"
+
+[[net]]
+name = "NEUROLINK_B_N"
+class = "high-speed-differential"
+source = "regional-transceiver"
+destination = "backplane"
+
+[[net]]
+name = "REFCLK_P"
+class = "clock"
+source = "backplane"
+destination = "regional-compute"
+
+[[net]]
+name = "REFCLK_N"
+class = "clock"
+source = "backplane"
+destination = "regional-compute"
+
+[[net]]
+name = "RESET_N"
+class = "reset"
+source = "management-mcu"
+destination = "regional-compute"
+
+[[net]]
+name = "THERMAL_ALERT"
+class = "safety"
+source = "thermal-monitor"
+destination = "management-mcu"
+
+[[net]]
+name = "WATCHDOG"
+class = "safety"
+source = "management-mcu"
+destination = "power-management"
