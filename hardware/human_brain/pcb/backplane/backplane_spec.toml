@@ -1,0 +1,30 @@
+[board]
+name = "human-brain-neuro-link-backplane"
+revision = "A0"
+width_mm = 160.0
+height_mm = 110.0
+layers = 8
+
+[slots]
+count = 12
+connector_style = "standardized-edge-or-mezzanine"
+cartridge_envelope_mm = [120.0, 80.0, 25.0]
+
+[buses]
+management = "i2c"
+debug = "uart"
+local_peripheral = "spi"
+neural_data = "high-speed-differential"
+clock = "distributed-low-skew"
+reset = "distributed"
+
+[power]
+input = "48V_DC_PROTOTYPE"
+regional_rail = "regulated_local"
+current_monitoring = true
+per_slot_fuse = true
+
+[safety]
+slot_enable = true
+power_good = true
+watchdog = true
