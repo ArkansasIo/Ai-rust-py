@@ -1,0 +1,22 @@
+[board]
+name = "human-brain-service"
+revision = "A0"
+width_mm = 60.0
+height_mm = 40.0
+layers = 4
+
+[ports]
+usb_c = 2
+uart = 2
+jtag = 1
+swd = 1
+
+[functions]
+firmware_flash = true
+boot_recovery = true
+serial_console = true
+factory_diagnostics = true
+
+[security]
+debug_unlock_required = true
+secure_boot_provisioning = true
