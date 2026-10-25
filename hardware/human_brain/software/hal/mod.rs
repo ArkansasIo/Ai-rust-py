@@ -9,6 +9,7 @@ pub mod virtual_storage;
 pub mod virtual_io;
 pub mod virtual_sensors;
 pub mod virtual_systems;
+pub mod neuro_link;
 #[cfg(test)]
 mod tests;
 
@@ -24,3 +25,4 @@ pub use virtual_storage::*;
 pub use virtual_io::*;
 pub use virtual_sensors::*;
 pub use virtual_systems::*;
+pub use neuro_link::*;
