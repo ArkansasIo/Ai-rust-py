@@ -1,0 +1,29 @@
+[board]
+name = "human-brain-power"
+revision = "A0"
+width_mm = 100.0
+height_mm = 70.0
+layers = 6
+
+[input]
+nominal_v = 48.0
+max_current_a = 25.0
+reverse_polarity_protection = true
+overvoltage_protection = true
+overcurrent_protection = true
+
+[distribution]
+per_slot_fuse = true
+current_monitoring = true
+power_good = true
+soft_start = true
+
+[rails]
+compute = "local_point_of_load"
+logic = "5V"
+peripheral = "3V3"
+audio = "5V_LOW_NOISE"
+
+[safety]
+emergency_cutoff = true
+watchdog_controlled = true
