@@ -1,0 +1,11 @@
+# Ai-rust-py maintenance schedule.
+# Install with: crontab cron/crontab.example
+
+# Service health every 5 minutes.
+*/5 * * * * /opt/ai-rust-py/cron/ai-cron.sh health-check >> /var/log/ai-rust-py-cron.log 2>&1
+
+# Queue status every 2 minutes.
+*/2 * * * * /opt/ai-rust-py/cron/ai-cron.sh queue-status >> /var/log/ai-rust-py-cron.log 2>&1
+
+# Nightly database backup; configure DB credentials in the environment first.
+30 2 * * * /opt/ai-rust-py/cron/mysql-backup.sh >> /var/log/ai-rust-py-backup.log 2>&1
