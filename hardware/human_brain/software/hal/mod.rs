@@ -9,6 +9,8 @@ pub mod virtual_storage;
 pub mod virtual_io;
 pub mod virtual_sensors;
 pub mod virtual_systems;
+#[cfg(test)]
+mod tests;
 
 #[cfg(feature = "raspberry-pi3")]
 pub mod raspberry_pi3;
