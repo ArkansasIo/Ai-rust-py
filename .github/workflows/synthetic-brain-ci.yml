@@ -6,7 +6,7 @@ on:
 
 jobs:
   rust:
-    name: Rust validation
+    name: Rust validation and executable build
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -18,5 +18,20 @@ jobs:
         run: cargo check --features virtual
       - name: Run tests
         run: cargo test --features virtual
-      - name: Build runtime
+      - name: Build release executable
         run: cargo build --release --features virtual
+      - name: Stage executable in output folder
+        run: |
+          mkdir -p ../../output/linux-x86_64
+          cp target/release/human-brain ../../output/linux-x86_64/human-brain
+          chmod +x ../../output/linux-x86_64/human-brain
+      - name: Verify executable
+        run: |
+          test -x ../../output/linux-x86_64/human-brain
+          ../../output/linux-x86_64/human-brain --version
+      - name: Upload executable artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: synthetic-brain-prototype-alpha-1.0.5-linux-x86_64
+          path: output/linux-x86_64/human-brain
+          if-no-files-found: error
