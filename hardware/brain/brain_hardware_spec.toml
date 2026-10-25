@@ -1,32 +1,48 @@
 [system]
-name = "Synthetic Brain Computer"
-architecture = "layered-distributed"
+name = "human.brain Synthetic Brain Computer"
+architecture = "custom-modular-distributed"
 protocol = "Neuro-Link Protocol"
-reference_platform = "Raspberry-Pi-class development computer"
+platform = "custom-pcb"
+prototype_envelope_mm = [220.0, 180.0, 170.0]
 
 [clock]
 control_hz = 1000
 neural_tick_hz = 100
 
 [memory]
-shared_memory_mb = 1024
+shared_memory_mb = 4096
 local_tile_memory_mb = 64
 
 [backplane]
 control_bus = "i2c"
 local_signal_bus = "spi"
 debug_bus = "uart"
-host_transport = "ethernet-or-usb"
+neural_transport = "high-speed-differential"
+service_transport = "usb-c"
 
 [regions]
 controllers = 12
+standard_cartridge_mm = [120.0, 80.0, 25.0]
+
+[sensors]
+eyes = "stereo-rgb-ir-depth"
+audio = "synchronized-microphone-arrays"
+
+[cooling]
+architecture = "ducted-active-air"
+thermal_spreader = "copper-or-vapor-chamber"
+heatsink = "custom-aluminum"
+blower = "40-60mm-pwm-centrifugal"
 
 [safety]
 watchdog_ms = 250
 thermal_shutdown_c = 85.0
 require_power_good = true
+per_slot_current_monitoring = true
 
 [development]
-firmware_target = "linux-user-space-or-arm64-mcu"
+firmware_target = "custom-arm64-plus-management-mcu"
+pcb_tool = "kicad"
+mechanical_cad = "autocad-compatible-dxf-step"
 fpga_target = "future"
 neuromorphic_target = "future"
