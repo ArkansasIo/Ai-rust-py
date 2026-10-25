@@ -1,0 +1,28 @@
+[board]
+name = "human-brain-thermal-controller"
+revision = "A0"
+width_mm = 80.0
+height_mm = 50.0
+layers = 4
+
+[sensors]
+module_temperature = 12
+inlet_temperature = 2
+exhaust_temperature = 2
+power_stage_temperature = 4
+
+[fan_control]
+channels = 8
+control = "pwm"
+tach_monitoring = true
+closed_loop = true
+
+[policy]
+warning_c = 70.0
+throttle_c = 78.0
+shutdown_c = 85.0
+
+[interface]
+management = "i2c"
+alerts = "gpio"
+service = "uart"
