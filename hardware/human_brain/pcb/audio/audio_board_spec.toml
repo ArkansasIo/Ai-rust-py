@@ -1,0 +1,27 @@
+[board]
+name = "human-brain-audio"
+revision = "A0"
+width_mm = 70.0
+height_mm = 45.0
+layers = 4
+
+[microphones]
+left_count = 2
+right_count = 2
+sample_rate_hz = 48000
+synchronized = true
+
+[audio]
+adc = "high-dynamic-range"
+dsp = "temporal-audio-preprocessing"
+speaker_amp = true
+
+[interfaces]
+upstream = "high-speed-differential"
+control = "i2c"
+service = "usb-c"
+
+[mechanical]
+left_ear_port = true
+right_ear_port = true
+speaker_port = true
