@@ -1,0 +1,20 @@
+# Local defaults for the Ai-rust-py services.
+# Environment variables override these values where supported.
+[server]
+host = "127.0.0.1"
+port = 8080
+request_timeout_seconds = 120
+
+[services]
+python_ml_url = "http://127.0.0.1:8001"
+ollama_url = "http://127.0.0.1:11434"
+ollama_model = "llama3.2"
+
+[database]
+max_connections = 10
+
+[security]
+# Development only: bind to loopback unless a reverse proxy and authentication
+# are configured. Do not treat CORS as an authentication mechanism.
+allow_shell_tools = false
+require_approval_for_writes = true
